@@ -1,15 +1,24 @@
 import random
+from validators import input_validators
 
-cpu_pick = random.randint(1, 101)
 
-player_pick = int(input('Guess the Number (between 1 and 100): '))
-count = 0
-while (cpu_pick != player_pick):
-    if player_pick < cpu_pick:
-        print("Too low!")
-    if player_pick > cpu_pick:
-        print("Too high!")
-    player_pick = int(input('Guess the Number (between 1 and 100): '))
-    count += 1
+def guess_the_number():
+    cpu_pick = random.randint(1, 100)
+    print(cpu_pick)
+    count = 0
+    while True:
+        count += 1
+        try:
+            player_pick = input_validators.is_num(
+                input('Guess the Number (between 1 and 100): '))
+        except ValueError as err:
+            print(err)
+        else:
+            if player_pick < cpu_pick:
+                print("Too low!")
+            elif player_pick > cpu_pick:
+                print("Too high!")
+            else:
+                break
 
-print(f"Congratulations! You guessed the number in {count} attempts")
+    print(f"Congratulations! You guessed the number in {count} attempts")
